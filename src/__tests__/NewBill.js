@@ -8,8 +8,11 @@ describe("Given I am connected as an employee", () => {
     test("Then I can't submit a newBill with a different extension proof of jpeg, png or jpg", () => {
       const html = NewBillUI()
       document.body.innerHTML = html
-      const bill = new NewBill
       const file = screen.getByTestId("file")
+      const fileName = file.value
+      const fileFormating = fileName.split(".")
+      const fileFormat = fileFormating[fileFormating.length-1]
+      expect(fileFormat).not.toBe(!("jpg" || "jpeg" || "png"))
     })
   })
 })

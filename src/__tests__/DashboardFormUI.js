@@ -73,3 +73,13 @@ describe('Given I am connected as an Admin and I am on Dashboard Page', () => {
   })
 })
 
+describe("Given I am connected as an admin", () => {
+  describe("When I am on dashboard", () => {
+    describe("When I open the modal form of the new bill", () => {
+      test("Then the modal form must have to display the picture", () => {
+        
+      })
+    })
+  })
+})
+
