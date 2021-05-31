@@ -12,7 +12,10 @@ describe("Given I am connected as an employee", () => {
       const fileName = file.value
       const fileFormating = fileName.split(".")
       const fileFormat = fileFormating[fileFormating.length-1]
-      expect(fileFormat).toBe("jpg" || "jpeg" || "png")
+      if (fileFormat !== "jpg" || fileFormat !== "jpeg" || fileFormat !== "png") {
+        file.value = ""
+      }
+      expect(file.value).toBe("")
     })
   })
 })
