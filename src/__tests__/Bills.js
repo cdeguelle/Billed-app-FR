@@ -1,20 +1,22 @@
 import { screen } from "@testing-library/dom"
 import BillsUI from "../views/BillsUI.js"
 import { bills } from "../fixtures/bills.js"
+import { localStorageMock } from "../__mocks__/localStorage.js"
+import '@testing-library/jest-dom/extend-expect'
 
 describe("Given I am connected as an employee", () => {
   describe("When I am on Bills Page", () => {
     test("Then bill icon in vertical layout should be highlighted", () => {
+      Object.defineProperty(window, 'localStorage', { value: localStorageMock })
       const user = JSON.stringify({
-        type: 'Employee'
+        type: "Employee"
       })
       window.localStorage.setItem('user', user)
       const html = BillsUI({ data: bills })
       document.body.innerHTML = html
       const expected = "active-icon"
       const billIcon = screen.getByTestId("icon-window")
-      billIcon.className = expected
-      expect(billIcon.className).toEqual(expected)
+      expect(billIcon).toHaveAttribute('class', expected)
     })
     test("Then bills should be ordered from earliest to latest", () => {
       const html = BillsUI({ data: bills })
