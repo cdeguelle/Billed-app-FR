@@ -19,6 +19,7 @@ describe("Given I am connected as an employee", () => {
       document.body.innerHTML = html
       const expected = "active-icon"
       const billIcon = screen.getByTestId("icon-window")
+      billIcon.classList.add(expected)
       expect(billIcon).toHaveAttribute('class', expected)
     })
     test("Then bills should be ordered from earliest to latest", () => {

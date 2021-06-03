@@ -33,7 +33,8 @@ export default class NewBill {
       })
     } else {
       this.document.querySelector(`input[data-testid="file"]`).value = ''
-      alert('Votre justificatif doit avoir comme extension jpeg, png ou jpg')
+      /* alert('Votre justificatif doit avoir comme extension jpeg, png ou jpg') */
+      return false
     }
   }
   handleSubmit = (e, bill) => {
@@ -41,19 +42,20 @@ export default class NewBill {
     const email = JSON.parse(localStorage.getItem("user")).email
     bill = {
       email,
-      type: e.target.querySelector(`select[data-testid="expense-type"]`).value,
-      name:  e.target.querySelector(`input[data-testid="expense-name"]`).value,
-      amount: parseInt(e.target.querySelector(`input[data-testid="amount"]`).value),
-      date:  e.target.querySelector(`input[data-testid="datepicker"]`).value,
-      vat: e.target.querySelector(`input[data-testid="vat"]`).value,
-      pct: parseInt(e.target.querySelector(`input[data-testid="pct"]`).value) || 20,
-      commentary: e.target.querySelector(`textarea[data-testid="commentary"]`).value,
+      type: this.document.querySelector(`select[data-testid="expense-type"]`).value,
+      name:  this.document.querySelector(`input[data-testid="expense-name"]`).value,
+      amount: parseInt(this.document.querySelector(`input[data-testid="amount"]`).value),
+      date:  this.document.querySelector(`input[data-testid="datepicker"]`).value,
+      vat: this.document.querySelector(`input[data-testid="vat"]`).value,
+      pct: parseInt(this.document.querySelector(`input[data-testid="pct"]`).value) || 20,
+      commentary: this.document.querySelector(`textarea[data-testid="commentary"]`).value,
       fileUrl: this.fileUrl,
       fileName: this.fileName,
       status: 'pending'
     }
     this.createBill(bill)
     this.onNavigate(ROUTES_PATH['Bills'])
+    
   }
 
   // not need to cover this function by tests
