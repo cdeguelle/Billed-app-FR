@@ -36,10 +36,10 @@ export default class NewBill {
       alert('Votre justificatif doit avoir comme extension jpeg, png ou jpg')
     }
   }
-  handleSubmit = e => {
+  handleSubmit = (e, bill) => {
     e.preventDefault()
     const email = JSON.parse(localStorage.getItem("user")).email
-    const bill = {
+    bill = {
       email,
       type: e.target.querySelector(`select[data-testid="expense-type"]`).value,
       name:  e.target.querySelector(`input[data-testid="expense-name"]`).value,

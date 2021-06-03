@@ -1,8 +1,11 @@
 import { screen } from "@testing-library/dom"
 import BillsUI from "../views/BillsUI.js"
+import Bills from "../containers/Bills.js"
 import { bills } from "../fixtures/bills.js"
 import { localStorageMock } from "../__mocks__/localStorage.js"
 import '@testing-library/jest-dom/extend-expect'
+import userEvent from '@testing-library/user-event'
+import { ROUTES } from "../constants/routes"
 
 describe("Given I am connected as an employee", () => {
   describe("When I am on Bills Page", () => {
@@ -47,6 +50,58 @@ describe("Given I am connected as an employee", () => {
       const html = BillsUI({ error })
       document.body.innerHTML = html
       expect(screen.getByTestId('error-message')).toBeTruthy()
+    })
+  })
+})
+
+describe("Given I am connected as an employee", () => {
+  describe("When I am on Bills Page", () => {
+    test("Then the newBill button works", () => {
+      const html = BillsUI({ data: bills })
+      document.body.innerHTML = html
+
+      const onNavigate = (pathname) => {
+        document.body.innerHTML = ROUTES({ pathname })
+      }
+      const firestore = null
+
+      Object.defineProperty(window, 'localStorage', { value: localStorageMock })
+      const billsPage = new Bills({
+        document, onNavigate, firestore, localStorage: window.localStorage
+      })
+
+      const handleClickNewBill = jest.fn(billsPage.handleClickNewBill)
+      const buttonNewBill = screen.getByTestId('btn-new-bill')
+      buttonNewBill.addEventListener('click', handleClickNewBill)
+      userEvent.click(buttonNewBill)
+      expect(handleClickNewBill).toHaveBeenCalled()
+    })
+  })
+})
+
+describe("Given I am connected as an employee", () => {
+  describe("When I am on Bills Page", () => {
+    test("Then the icons eye works", () => {
+      const html = BillsUI({ data: bills })
+      document.body.innerHTML = html
+
+      const onNavigate = (pathname) => {
+        document.body.innerHTML = ROUTES({ pathname })
+      }
+      const firestore = null
+
+      Object.defineProperty(window, 'localStorage', { value: localStorageMock })
+      const billsPage = new Bills({
+        document, onNavigate, firestore, localStorage: window.localStorage
+      })
+
+      const handleClickIconEye = jest.fn(billsPage.handleClickIconEye)
+      const iconEye = screen.getAllByTestId('icon-eye')
+      iconEye.forEach(icon => {
+        icon.addEventListener('click', (e) => handleClickIconEye(icon))
+      })
+      iconEye.forEach(icon => userEvent.click(icon))
+      expect(handleClickIconEye).toHaveBeenCalled()
     })
   })
 })
