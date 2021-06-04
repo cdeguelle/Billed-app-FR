@@ -31,9 +31,13 @@ export default class NewBill {
         this.fileUrl = url
         this.fileName = fileName
       })
+      const fileError = this.document.getElementById('file-error')
+      fileError.innerHTML = ""
     } else {
       this.document.querySelector(`input[data-testid="file"]`).value = ''
-      /* alert('Votre justificatif doit avoir comme extension jpeg, png ou jpg') */
+      const fileError = this.document.getElementById('file-error')
+      fileError.innerHTML = "Votre justificatif doit avoir comme extension jpeg, png ou jpg"
+      fileError.style.color = "red"
       return false
     }
   }
